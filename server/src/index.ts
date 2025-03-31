@@ -31,7 +31,9 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/teams', teamRoutes);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../../client/build')));
+const staticPath = path.join(__dirname, '../../client/build');
+console.log('Static files path:', staticPath);
+app.use(express.static(staticPath));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
