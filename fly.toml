@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for project-management-tool-frosty-firefly-454 on 2025-03-31T11:15:24-05:00
+# fly.toml app configuration file generated for project-management-tool-restless-water-7833 on 2025-03-31T11:18:47-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'project-management-tool-frosty-firefly-454'
+app = 'project-management-tool-restless-water-7833'
 primary_region = 'dfw'
 
 [build]
@@ -21,22 +21,27 @@ primary_region = 'dfw'
   processes = ['app']
 
 [[services]]
-  protocol = "tcp"
+  protocol = 'tcp'
   internal_port = 8080
-  processes = ["app"]
+  processes = ['app']
 
   [[services.ports]]
     port = 80
-    handlers = ["http"]
+    handlers = ['http']
 
   [[services.ports]]
     port = 443
-    handlers = ["tls", "http"]
+    handlers = ['tls', 'http']
 
   [[services.http_checks]]
-    interval = "10s"
-    grace_period = "5s"
-    method = "get"
-    path = "/health"
-    protocol = "http"
-    timeout = "2s"
+    interval = '10s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'get'
+    path = '/health'
+    protocol = 'http'
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

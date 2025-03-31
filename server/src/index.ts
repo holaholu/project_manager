@@ -53,10 +53,10 @@ mongoose.connect(MONGODB_URI as string)
   .then(() => {
     console.log('Connected to MongoDB successfully');
     
-    const PORT = process.env.PORT || 5001;
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-      //console.log(`API endpoints available at http://localhost:${PORT}/api`);
+    const PORT = parseInt(process.env.PORT || '5001', 10);
+    const HOST = '0.0.0.0';
+    app.listen(PORT, HOST, () => {
+      console.log(`Server is running on ${HOST}:${PORT}`);
     });
   })
   .catch((error) => {
