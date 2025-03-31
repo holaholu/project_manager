@@ -6,23 +6,26 @@ A full-stack project management application built with the MERN stack (MongoDB, 
 
 ## Screenshots
 
-### Dashboard Overview
-![Dashboard](screen1.png)
+### Homepage
+![Homepage](Homepage.png)
 
-### Project Management
-![Projects](screen2.png)
+### Dashboard
+![Dashboard](Dashboard.png)
+
+### Projects Overview
+![Projects](Projects.png)
 
 ### Task Management
-![Tasks](screen3.png)
+![Tasks](Task.png)
 
-### Team Collaboration
-![Team](screen4.png)
-
-### Analytics & Insights
-![Analytics](screen5.png)
+### Team Management
+![Team](Team.png)
 
 ### Risk Analysis
-![Risk Analysis](screen6.png)
+![Risk Analysis](RiskAnalysis.png)
+
+### Settings
+![Settings](Settings.png)
 
 ## Features
 
