@@ -2,6 +2,28 @@
 
 A full-stack project management application built with the MERN stack (MongoDB, Express.js, React, Node.js).
 
+🚀 [Live Demo](https://project-management-tool-app-d826a567f678.herokuapp.com/)
+
+## Screenshots
+
+### Dashboard Overview
+![Dashboard](screen1.png)
+
+### Project Management
+![Projects](screen2.png)
+
+### Task Management
+![Tasks](screen3.png)
+
+### Team Collaboration
+![Team](screen4.png)
+
+### Analytics & Insights
+![Analytics](screen5.png)
+
+### Risk Analysis
+![Risk Analysis](screen6.png)
+
 ## Features
 
 - Modern Project Management
