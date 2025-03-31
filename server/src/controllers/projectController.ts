@@ -1,13 +1,29 @@
 import { Request, Response } from 'express';
 import Project, { IProject } from '../models/Project';
 
-// Get all projects
+// Get user's projects (created by user or where user is a member)
 export const getProjects = async (req: Request, res: Response): Promise<void> => {
   try {
-    const projects = await Project.find()
+    console.log('Auth User:', req.user); // Debug log
+    const userId = req.user?._id;
+    
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+
+    console.log('Searching for projects with userId:', userId); // Debug log
+    const projects = await Project.find({
+      $or: [
+        { createdBy: userId },
+        { members: userId }
+      ]
+    })
       .populate('tasks')
       .populate('members', 'name email')
       .populate('createdBy', 'name email');
+
+    console.log('Found projects:', projects.length); // Debug log
     res.json(projects);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching projects', error });

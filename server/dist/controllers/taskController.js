@@ -14,10 +14,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTask = exports.updateTask = exports.createTask = exports.getTask = exports.getProjectTasks = exports.getTasks = void 0;
 const Task_1 = __importDefault(require("../models/Task"));
-// Get all tasks
+const Project_1 = __importDefault(require("../models/Project"));
+// Get tasks for user (tasks from user's projects or assigned to user)
 const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const tasks = yield Task_1.default.find()
+        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a._id;
+        if (!userId) {
+            res.status(401).json({ message: 'User not authenticated' });
+            return;
+        }
+        // First, get all projects where user is creator or member
+        const userProjects = yield Project_1.default.find({
+            $or: [
+                { createdBy: userId },
+                { members: userId }
+            ]
+        }).select('_id');
+        const projectIds = userProjects.map(project => project._id);
+        // Then get tasks that either:
+        // 1. Belong to user's projects, or
+        // 2. Are assigned to the user
+        const tasks = yield Task_1.default.find({
+            $or: [
+                { project: { $in: projectIds } },
+                { assignedTo: userId },
+                { createdBy: userId }
+            ]
+        })
             .populate('project', 'name')
             .populate('assignedTo', 'name email')
             .populate('createdBy', 'name email');
@@ -61,9 +85,9 @@ const getTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getTask = getTask;
 // Create task
 const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _b;
     try {
-        const task = new Task_1.default(Object.assign(Object.assign({}, req.body), { createdBy: (_a = req.user) === null || _a === void 0 ? void 0 : _a._id }));
+        const task = new Task_1.default(Object.assign(Object.assign({}, req.body), { createdBy: (_b = req.user) === null || _b === void 0 ? void 0 : _b._id }));
         const savedTask = yield task.save();
         res.status(201).json(savedTask);
     }

@@ -10,7 +10,6 @@ const router = express_1.default.Router();
 router.post('/register', userController_1.register);
 router.post('/login', userController_1.login);
 router.route('/profile')
-    .get(authMiddleware_1.protect, userController_1.getProfile)
-    .put(authMiddleware_1.protect, userController_1.updateProfile);
+    .get(authMiddleware_1.protect, userController_1.getProfile);
 router.post('/change-password', authMiddleware_1.protect, userController_1.changePassword);
 exports.default = router;

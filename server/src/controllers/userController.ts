@@ -61,9 +61,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 export const getProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findById(req.user?._id)
-      .select('-password')
-      .populate('projects')
-      .populate('tasks');
+      .select('-password') // Exclude password from response
+      .populate('projects') // replace projects ref with project details
+      .populate('tasks'); // replace tasks ref with task details
     
     if (!user) {
       res.status(404).json({ message: 'User not found' });
@@ -76,33 +76,6 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-// Update user profile
-export const updateProfile = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const user = await User.findById(req.user?._id);
-
-    if (!user) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
-
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
-
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-    });
-  } catch (error) {
-    res.status(400).json({ message: 'Error updating profile', error });
-  }
-};
 
 // Change password
 export const changePassword = async (req: Request, res: Response): Promise<void> => {

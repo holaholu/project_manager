@@ -8,8 +8,6 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const http_1 = require("http");
-const socket_io_1 = require("socket.io");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
 const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
@@ -18,14 +16,6 @@ const teamRoutes_1 = __importDefault(require("./routes/teamRoutes"));
 dotenv_1.default.config();
 // Create Express app
 const app = (0, express_1.default)();
-// Create HTTP server and Socket.io instance
-const httpServer = (0, http_1.createServer)(app);
-const io = new socket_io_1.Server(httpServer, {
-    cors: {
-        origin: process.env.CLIENT_URL || 'http://localhost:3000',
-        methods: ['GET', 'POST']
-    }
-});
 // Middleware
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -50,19 +40,12 @@ mongoose_1.default.connect(MONGODB_URI)
     .then(() => {
     console.log('Connected to MongoDB successfully');
     const PORT = process.env.PORT || 5001;
-    httpServer.listen(PORT, () => {
+    app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
-        console.log(`API endpoints available at http://localhost:${PORT}/api`);
+        //console.log(`API endpoints available at http://localhost:${PORT}/api`);
     });
 })
     .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
     process.exit(1);
-});
-// Socket.io connection handler
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
 });

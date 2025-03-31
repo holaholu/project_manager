@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changePassword = exports.updateProfile = exports.getProfile = exports.login = exports.register = void 0;
+exports.changePassword = exports.getProfile = exports.login = exports.register = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../models/User"));
 // Register user
@@ -73,9 +73,9 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     var _a;
     try {
         const user = yield User_1.default.findById((_a = req.user) === null || _a === void 0 ? void 0 : _a._id)
-            .select('-password')
-            .populate('projects')
-            .populate('tasks');
+            .select('-password') // Exclude password from response
+            .populate('projects') // replace projects ref with project details
+            .populate('tasks'); // replace tasks ref with task details
         if (!user) {
             res.status(404).json({ message: 'User not found' });
             return;
@@ -87,38 +87,12 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getProfile = getProfile;
-// Update user profile
-const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
-    try {
-        const user = yield User_1.default.findById((_b = req.user) === null || _b === void 0 ? void 0 : _b._id);
-        if (!user) {
-            res.status(404).json({ message: 'User not found' });
-            return;
-        }
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
-        if (req.body.password) {
-            user.password = req.body.password;
-        }
-        const updatedUser = yield user.save();
-        res.json({
-            _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-        });
-    }
-    catch (error) {
-        res.status(400).json({ message: 'Error updating profile', error });
-    }
-});
-exports.updateProfile = updateProfile;
 // Change password
 const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
+    var _b;
     try {
         const { currentPassword, newPassword } = req.body;
-        const user = yield User_1.default.findById((_c = req.user) === null || _c === void 0 ? void 0 : _c._id);
+        const user = yield User_1.default.findById((_b = req.user) === null || _b === void 0 ? void 0 : _b._id);
         if (!user) {
             res.status(404).json({ message: 'User not found' });
             return;

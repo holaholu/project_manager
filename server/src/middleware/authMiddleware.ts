@@ -49,6 +49,7 @@ export const protect = async (
 
     if (!token) {
       res.status(401).json({ message: 'Not authorized, no token' });
+      return;
     }
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

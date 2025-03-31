@@ -40,6 +40,7 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         }
         if (!token) {
             res.status(401).json({ message: 'Not authorized, no token' });
+            return;
         }
     }
     catch (error) {

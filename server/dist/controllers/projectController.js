@@ -14,13 +14,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteProject = exports.updateProject = exports.createProject = exports.getProject = exports.getProjects = void 0;
 const Project_1 = __importDefault(require("../models/Project"));
-// Get all projects
+// Get user's projects (created by user or where user is a member)
 const getProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const projects = yield Project_1.default.find()
+        console.log('Auth User:', req.user); // Debug log
+        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a._id;
+        if (!userId) {
+            res.status(401).json({ message: 'User not authenticated' });
+            return;
+        }
+        console.log('Searching for projects with userId:', userId); // Debug log
+        const projects = yield Project_1.default.find({
+            $or: [
+                { createdBy: userId },
+                { members: userId }
+            ]
+        })
             .populate('tasks')
             .populate('members', 'name email')
             .populate('createdBy', 'name email');
+        console.log('Found projects:', projects.length); // Debug log
         res.json(projects);
     }
     catch (error) {
@@ -48,9 +62,9 @@ const getProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getProject = getProject;
 // Create project
 const createProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _b;
     try {
-        const project = new Project_1.default(Object.assign(Object.assign({}, req.body), { createdBy: (_a = req.user) === null || _a === void 0 ? void 0 : _a._id }));
+        const project = new Project_1.default(Object.assign(Object.assign({}, req.body), { createdBy: (_b = req.user) === null || _b === void 0 ? void 0 : _b._id }));
         const savedProject = yield project.save();
         res.status(201).json(savedProject);
     }
