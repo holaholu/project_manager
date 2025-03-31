@@ -51,11 +51,12 @@ A full-stack project management application built with the MERN stack (MongoDB, 
   - Contextual risk insights based on project details
 
 - Project Analytics & Insights
-  - Visual project progress tracking
-  - Project overview dashboard
-  - Status distribution analytics
-  - Progress tracking visualization
-  - Real-time project statistics
+  - Visual project progress tracking using D3.js
+  - Interactive project overview dashboard
+  - Status distribution with pie charts
+  - Completion progress with bar charts
+  - Real-time project statistics and metrics
+  - Custom D3.js visualizations for data analysis
 
 - User Experience
   - Clean and intuitive interface
@@ -67,18 +68,22 @@ A full-stack project management application built with the MERN stack (MongoDB, 
 ## Tech Stack
 
 ### Frontend
-- React 18 with TypeScript
+- React 19 with TypeScript
 - Redux Toolkit for state management
-- Material-UI v5 for components
-- Chart.js for analytics
+- Material-UI v7 for components
+- D3.js for data visualization and analytics
+- Lottie for animations
 - Modern responsive design
 - Progressive Web App capabilities
 
 ### Backend
-- Node.js with Express
+- Node.js with Express and TypeScript
 - MongoDB with Mongoose ODM
+- JWT and bcrypt for authentication and security
 - RESTful API architecture
 - GPT-4 AI integration
+- CORS enabled for security
+- Environment-based configuration
 
 
 ### DevOps & Tools
