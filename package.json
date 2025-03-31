@@ -2,13 +2,16 @@
   "name": "project-management-tool",
   "version": "1.0.0",
   "description": "Full stack Project Management Tool",
+  "dependencies": {
+    "react-scripts": "5.0.1"
+  },
   "scripts": {
     "install-server": "cd server && npm install",
     "install-client": "cd client && npm install",
     "build-server": "cd server && npm run build",
-    "build-client": "cd client && npm run build",
+    "build-client": "cd client && react-scripts build",
     "start": "cd server && npm start",
-    "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client && npm run build-server"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run install-server && npm run build-client && npm run build-server"
   },
   "engines": {
     "node": "18.x"
