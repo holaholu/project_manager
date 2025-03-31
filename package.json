@@ -32,9 +32,9 @@
   },
   "scripts": {
     "install-server": "cd server && npm install",
-    "install-client": "cd client && npm install",
+    "install-client": "cd client && cp package.json ../client-package.json && cd .. && mv client-package.json client/package.json && cd client && npm install",
     "build-server": "cd server && npm run build",
-    "build-client": "cd client && CI=false react-scripts build",
+    "build-client": "cd client && CI=false npm run build",
     "start": "cd server && npm start",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run install-server && npm run build-client && npm run build-server"
   },
