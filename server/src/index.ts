@@ -2,8 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
 import userRoutes from './routes/userRoutes';
 import projectRoutes from './routes/projectRoutes';
 import taskRoutes from './routes/taskRoutes';
@@ -14,15 +12,6 @@ dotenv.config();
 
 // Create Express app
 const app = express();
-
-// Create HTTP server and Socket.io instance
-const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
-    methods: ['GET', 'POST']
-  }
-});
 
 // Middleware
 app.use(cors());
@@ -54,21 +43,12 @@ mongoose.connect(MONGODB_URI as string)
     console.log('Connected to MongoDB successfully');
     
     const PORT = process.env.PORT || 5001;
-    httpServer.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
-      console.log(`API endpoints available at http://localhost:${PORT}/api`);
+      //console.log(`API endpoints available at http://localhost:${PORT}/api`);
     });
   })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
     process.exit(1);
   });
-
-// Socket.io connection handler
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-  });
-});
