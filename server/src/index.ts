@@ -19,6 +19,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy' });
+});
+
 // API Routes
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
