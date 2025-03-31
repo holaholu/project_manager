@@ -36,7 +36,7 @@
     "build-server": "cd server && npm run build",
     "build-client": "cd client && CI=false npm run build",
     "start": "cd server && npm start",
-    "heroku-postbuild": "cd client && npm install && npm run build && cd ../server && npm install && npm run build"
+    "heroku-postbuild": "npm run install-client && npm run build-client && npm run install-server && npm run build-server"
   },
   "engines": {
     "node": "18.x"
