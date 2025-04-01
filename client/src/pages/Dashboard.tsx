@@ -15,6 +15,7 @@ import {
   Alert,
 } from '@mui/material';
 import { AppDispatch } from '../store';
+import { getStatusColor } from '../utils/colors';
 import {
   fetchProjects,
   selectProjects,
@@ -53,19 +54,6 @@ interface Task {
     name: string;
   };
 }
-
-const getStatusColor = (status: string) => {
-  switch (status.toLowerCase()) {
-    case 'completed':
-      return 'success';
-    case 'in progress':
-      return 'primary';
-    case 'review':
-      return 'warning';
-    default:
-      return 'default';
-  }
-};
 
 export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>();

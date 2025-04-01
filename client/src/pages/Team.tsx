@@ -25,7 +25,6 @@ import {
 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'store';
-import teamReducer from 'store/slices/teamSlice';
 import type { TeamMember } from 'store/slices/teamSlice';
 import {
   fetchTeamMembers,

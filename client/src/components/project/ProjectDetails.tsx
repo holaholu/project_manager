@@ -1,4 +1,5 @@
 import React from 'react';
+import { getStatusColor } from '../../utils/colors';
 import {
   Box,
   Card,
@@ -23,16 +24,7 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Completed':
-        return 'success';
-      case 'In Progress':
-        return 'primary';
-      default:
-        return 'default';
-    }
-  };
+
 
   return (
     <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} sx={{ width: '100%' }}>

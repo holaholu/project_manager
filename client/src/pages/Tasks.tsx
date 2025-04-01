@@ -281,31 +281,9 @@ export const Tasks = () => {
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority.toLowerCase()) {
-      case 'high':
-        return 'error';
-      case 'medium':
-        return 'warning';
-      case 'low':
-        return 'success';
-      default:
-        return 'default';
-    }
-  };
+  
 
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'completed':
-        return 'success';
-      case 'in progress':
-        return 'primary';
-      case 'to do':
-        return 'default';
-      default:
-        return 'default';
-    }
-  };
+ 
 
   if (isLoading) {
     return (

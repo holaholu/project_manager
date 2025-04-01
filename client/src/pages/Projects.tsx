@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { sanitizeInput, validateProjectInput } from '../utils/validation';
+import { getStatusColor } from '../utils/colors';
 import {
   Box,
   Container,
@@ -243,19 +244,6 @@ const Projects: React.FC = () => {
       } catch (error) {
         console.error('Error deleting project:', error);
       }
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'completed':
-        return 'success';
-      case 'in progress':
-        return 'primary';
-      case 'not started':
-        return 'default';
-      default:
-        return 'default';
     }
   };
 
